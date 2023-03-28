@@ -107,11 +107,11 @@ face 2.1: 7, 5, 6 - blue
 face 3.0: 1, 3, 5 - yellow
 face 3.1: 7, 3, 5 - yellow
 
-face 4.0: 2, 3, 6 - white
-face 4.1: 7, 3, 6 - white
+face 4.0: 2, 3, 6 - cyan
+face 4.1: 7, 3, 6 - cyan
 
-face 5.0: 0, 1, 4 - gray
-face 5.1: 5, 1, 4 - gray
+face 5.0: 0, 1, 4 - magenta
+face 5.1: 5, 1, 4 - magenta
 ```
 
 
