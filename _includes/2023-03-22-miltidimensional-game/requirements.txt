@@ -1,0 +1,7 @@
+PyQt5==5.15.1
+pyqtgraph
+pyopengl
+distinctipy
+scipy
+pytest
+numpy
