@@ -4,7 +4,7 @@ title:  "Multidimensional Game"
 date:   2023-03-22 20:35:17 +0100
 categories: game
 published: true
-this_includes: 2023-03-22-miltidimensional-game-includes
+this_includes: 2023-03-22-miltidimensional-game
 ---
 
 Some time ago I thought that it would be cool to one day be able to say: "I created a 4D game". So, I decided to create one. During the process of thinking I figured out that 4+D game actually sounds even cooler. And here we are.
@@ -118,8 +118,14 @@ face 5.1: 5, 1, 4 - magenta
 
 Having all this information we finally can create mesh data, color it and display. Full listing of a simple Qt window displaying such a cube:
 ```py
-{% include {{ page.this_includes }}/multidimensional-game.py %}
+{% include_relative multidimensional-game.py %}
 ```
+
+We get this:
+
+![cool image](/assets/miltidimensional-game/cube3d.gif)
+
+a 
 
 # Presenting 4D cube
 
