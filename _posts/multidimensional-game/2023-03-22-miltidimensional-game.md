@@ -401,23 +401,37 @@ and `edges_of_faces`:
 ]
 ```
 
-Now we have a full-fledged cube data - all the vertices logically divided into edges and faces. We can start thinking about the math needed for presenting hypercubes in a 3D scene. Full code generating a cube:
+Now we have a full-fledged cube data - all the vertices logically divided into edges and faces. We can start thinking about the math needed for presenting hypercubes in a 3D scene.
+
+The full code generating cube data:
 ```py
 {% include_relative generate-vertices-and-faces.py %}
 ```
 
 ## Why all this?
 
-To understand why we need such an acrobatic approach to present a hypercube, we need to understand how it's gonna be presented.
+To understand why we need such acrobatics to just present a hypercube, we need to understand how it's gonna be presented.
 
 There are many approaches to present higher dimensions in 3D. I took this:
 
-> In order to present ND object in (N-1)D, calculate an intersection of this object with (N-1)D hyperplane.
+> In order to present an ND object in an (N-1)D, calculate the intersection of this object with (N-1)D hyperplane.
 
 What does it mean? If we'd like to present a 3D cube for a 2D person, we'd pick an arbitrary 2D plane, cut our cube with it (calculate intersection), connect the intersection points and present the result 2D polygon to the 2D person.
 
 TODO IMAGE OF CUT 3D CUBE
 
-Similar with 4D. You have 4D cube, you _cut_ it with a 3D plane (basically a 3D space), connect the intersection points and present the result 3D object to the 3D person.
+If a 2D plane cuts a 3D cube, each face is intersected in 0, 1 or 2 points. To fully present the result polygon, we're remembering colors of the cut faces. Thanks to that we have colorful edges of the polygon.
 
-TODO GIF OF CUT 4D CUBE
+Similar with 4D. You have 4D cube, you _cut_ it with a 3D plane (basically a 3D space), connect the intersection points and present the result 3D object to the 3D person. An example 4D cube (after some rotations):
+
+![cool image](/assets/miltidimensional-game/cube4d.gif)
+
+As you can see here, each face of the result 3D object is of a different color. The approach is analogous - after intersection, remember colors of the 4D faces where given intersection points come from and use this color to paint the result face of a 3D object. 4D cube has 8 faces, the 3D representation should be have up to 8 faces as well.
+
+And that's why we wanted to have vertices logically divided into faces and edges. We can assign a color to one face, do the math and present result 3D object - all this without losing the original colors. 
+
+
+How the math is done in Python? I'll explain it in the next posts. I realized this one is growing and let's cut it here.
+
+# Thanks for reading o/
+
