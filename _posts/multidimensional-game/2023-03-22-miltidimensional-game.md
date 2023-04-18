@@ -29,7 +29,7 @@ Python because it's Python and it just works. Pygraph because it can display mes
 
 Presenting a 3D cube is quite trivial these days. There are two ways that I considered - presenting a cube mesh using one color with shadows, or coloring every of the cube faces with its own color. It turned out that pygraph doesn't support shadows, so I went the colorful way. Which complicates stuff quite a lot with 4+D as I learned :)
 
-## 3D cube mesh
+#### 3D cube mesh
 
 We'll focus on cubes with edges of length 1, originated in the point `0, 0, 0`. Vertices of a 3D cube are quite simple. You just take all the permutations of zeros and ones of length 3, so:
 ```
@@ -121,12 +121,303 @@ Having all this information we finally can create mesh data, color it and displa
 {% include_relative multidimensional-game.py %}
 ```
 
-We get this:
+We get this simple cube:
 
 ![cool image](/assets/miltidimensional-game/cube3d.gif)
 
-a 
 
 # Presenting 4D cube
 
+Presenting 4D cube is a bit trickier. Of course, we could just hard code everything but let's not do this. We want a generic approach to be able to generate and present a cube of any dimensions.
 
+What we know from the 3D cube section, we need to:
+1. Generate vertices of the cube.
+2. Know which vertices build given face.
+3. Assign one color per face.
+
+## Generating vertices
+
+Generating vertices of an ND cube is as simple as:
+```py
+vertices = list(itertools.product([0, 1], repeat=N))
+```
+This will generate all the needed vertices consisting of 0 and 1, of length N. For 4D:
+```
+0, 0, 0, 0
+0, 0, 0, 1
+0, 0, 1, 0
+0, 0, 1, 1
+0, 1, 0, 0
+0, 1, 0, 1
+0, 1, 1, 0
+0, 1, 1, 1
+1, 0, 0, 0
+1, 0, 0, 1
+1, 0, 1, 0
+1, 0, 1, 1
+1, 1, 0, 0
+1, 1, 0, 1
+1, 1, 1, 0
+1, 1, 1, 1
+```
+
+## Logically assigning vertices to faces
+
+We have a list of vertices, now we need to know how to build faces of the cube with them.
+
+As of now, the cube is not rotated, so each of its faces is parallel to one of the canonical axes. With this we can fairly easy generate vertices of all the faces.
+Consider the front face of a 3D cube. 
+
+TODO IMG 1
+
+The face consist of vertices
+```
+0, 0, 0
+1, 0, 0
+1, 1, 0
+0, 1, 0
+```
+Now, the back face of the cube
+```
+0, 0, 1
+1, 0, 1
+1, 1, 1
+0, 1, 1
+```
+
+I think we can see a pattern here. A face has all possible vertices with one axis constant.
+
+In order to generate faces of a 3D cube we should:
+1. Generate all possible vertices in 2D
+2. Insert 0 and 1 in all possible _places_ of the vertices
+
+Point 2 means, if there's a 2D vertex `0, 1` then `0` or `1` can be inserted in three _places_:
+
+```
+ 0, 1
+^  ^  ^
+```
+
+So, all possible 3D vertices we can get from this 2D one are:
+
+```
+0, 1, 0
+0, 1, 1
+
+0, 0, 1
+0, 1, 1
+
+0, 0, 1
+1, 0, 1
+```
+
+Python generating all possible faces of an ND cube looks like this:
+
+```py
+vs = [list(v) for v in itertools.product([0, 1], repeat=(N-1))]
+faces = []
+
+for i in [0, 1]:
+    for pos_to_insert in range(N):
+        face = []
+        for v in vs:
+            vertex = list(v)
+            vertex.insert(pos_to_insert, i)
+            face.append(vertex)
+
+        faces.append(face)
+```
+
+For `N=4` we end up with:
+```py
+[
+  [
+    [0, 0, 0, 0], [0, 0, 0, 1], [0, 0, 1, 0], [0, 0, 1, 1], [0, 1, 0, 0], [0, 1, 0, 1], [0, 1, 1, 0], [0, 1, 1, 1]
+  ],
+  [
+    [0, 0, 0, 0], [0, 0, 0, 1], [0, 0, 1, 0], [0, 0, 1, 1], [1, 0, 0, 0], [1, 0, 0, 1], [1, 0, 1, 0], [1, 0, 1, 1]
+  ],
+  [
+    [0, 0, 0, 0], [0, 0, 0, 1], [0, 1, 0, 0], [0, 1, 0, 1], [1, 0, 0, 0], [1, 0, 0, 1], [1, 1, 0, 0], [1, 1, 0, 1]
+  ],
+  [
+    [0, 0, 0, 0], [0, 0, 1, 0], [0, 1, 0, 0], [0, 1, 1, 0], [1, 0, 0, 0], [1, 0, 1, 0], [1, 1, 0, 0], [1, 1, 1, 0]
+  ],
+  [
+    [1, 0, 0, 0], [1, 0, 0, 1], [1, 0, 1, 0], [1, 0, 1, 1], [1, 1, 0, 0], [1, 1, 0, 1], [1, 1, 1, 0], [1, 1, 1, 1]
+  ], 
+  [
+    [0, 1, 0, 0], [0, 1, 0, 1], [0, 1, 1, 0], [0, 1, 1, 1], [1, 1, 0, 0], [1, 1, 0, 1], [1, 1, 1, 0], [1, 1, 1, 1]
+  ], 
+  [
+    [0, 0, 1, 0], [0, 0, 1, 1], [0, 1, 1, 0], [0, 1, 1, 1], [1, 0, 1, 0], [1, 0, 1, 1], [1, 1, 1, 0], [1, 1, 1, 1]
+  ], 
+  [
+    [0, 0, 0, 1], [0, 0, 1, 1], [0, 1, 0, 1], [0, 1, 1, 1], [1, 0, 0, 1], [1, 0, 1, 1], [1, 1, 0, 1], [1, 1, 1, 1]
+  ]
+]
+```
+
+## Edges
+
+You know, vertices are cool but for presenting 4+D cubes in 3D we'll need edges at some point, in order to calculate an intersection of 4D edge with 3D hyperplane. More about it later. For now let's just assume we need edges.
+
+If we have a list of faces like above, then _discovering_ edges of every face is quite simple. We generate cubes of size 1, so all edges of all faces are going to have length 1. That means we can iterate over vertices of a face and if distance between two given vertices is 1, that's an edge.
+
+```py
+def vertex_distance(a, b):
+    s = sum([abs(ai - bi)**2 for ai, bi in zip(a, b)])
+    return math.sqrt(s)
+
+
+edges_of_faces = []
+
+for face in faces:
+    edges = set()
+    for v0 in face:
+        for v1 in face:
+            if vertex_distance(v0, v1) == 1:
+                edge = tuple(sorted((tuple(v0), tuple(v1))))
+                edges.add(edge)
+
+    edges_of_faces.append(edges)
+```
+
+For 4D we end up with:
+
+```py
+[
+    {
+        ((0, 0, 1, 0), (0, 0, 1, 1)), 
+        ((0, 0, 0, 0), (0, 0, 0, 1)), 
+        ((0, 0, 0, 0), (0, 0, 1, 0)), 
+        ((0, 0, 0, 1), (0, 0, 1, 1)), 
+        ((0, 0, 1, 1), (0, 1, 1, 1)), 
+        ((0, 1, 1, 0), (0, 1, 1, 1)), 
+        ((0, 0, 0, 1), (0, 1, 0, 1)), 
+        ((0, 1, 0, 0), (0, 1, 0, 1)), 
+        ((0, 1, 0, 1), (0, 1, 1, 1)), 
+        ((0, 0, 0, 0), (0, 1, 0, 0)), 
+        ((0, 0, 1, 0), (0, 1, 1, 0)), 
+        ((0, 1, 0, 0), (0, 1, 1, 0))
+    }, 
+    ...
+]
+```
+
+Ok, so we have vertices building edges now. But, what's not cool in that is that we store the same vertices more than once, e.g. `(0, 0, 0, 0)`:
+```py
+[
+    {
+        ((0, 0, 1, 0), (0, 0, 1, 1)), 
+     >> ((0, 0, 0, 0), (0, 0, 0, 1)), 
+     >> ((0, 0, 0, 0), (0, 0, 1, 0)), 
+        ((0, 0, 0, 1), (0, 0, 1, 1)), 
+        ((0, 0, 1, 1), (0, 1, 1, 1)), 
+        ((0, 1, 1, 0), (0, 1, 1, 1)), 
+        ((0, 0, 0, 1), (0, 1, 0, 1)), 
+        ((0, 1, 0, 0), (0, 1, 0, 1)), 
+        ((0, 1, 0, 1), (0, 1, 1, 1)), 
+     >> ((0, 0, 0, 0), (0, 1, 0, 0)), 
+        ((0, 0, 1, 0), (0, 1, 1, 0)), 
+        ((0, 1, 0, 0), (0, 1, 1, 0))
+    }, 
+    ...
+]
+```
+
+We want to store vertices once and refer to these vertices from the edges:
+```py
+def vertex_distance(a, b):
+    s = sum([abs(ai - bi)**2 for ai, bi in zip(a, b)])
+    return math.sqrt(s)
+
+vertices = list(itertools.product([0, 1], repeat=N))
+vertices = [list(e) for e in vertices]
+
+edges_of_faces = []
+
+for face in faces:
+    edges = set()
+    for v0 in face:
+        for v1 in face:
+            if vertex_distance(v0, v1) == 1:
+                index_i = vertices.index(v0)
+                index_j = vertices.index(v1)
+
+                edge = tuple(sorted((index_i, index_j)))
+                edges.add(edge)
+
+    edges_of_faces.append(edges)
+```
+
+This gives us `vertices`:
+```
+[0]: 0, 0, 0, 0
+[1]: 0, 0, 0, 1
+[2]: 0, 0, 1, 0
+[3]: 0, 0, 1, 1
+[4]: 0, 1, 0, 0
+[5]: 0, 1, 0, 1
+[6]: 0, 1, 1, 0
+[7]: 0, 1, 1, 1
+[8]: 1, 0, 0, 0
+[9]: 1, 0, 0, 1
+[10]: 1, 0, 1, 0
+[11]: 1, 0, 1, 1
+[12]: 1, 1, 0, 0
+[13]: 1, 1, 0, 1
+[14]: 1, 1, 1, 0
+[15]: 1, 1, 1, 1
+```
+
+and `edges_of_faces`:
+```py
+[
+    {
+        (0, 1), (0, 4), (1, 5), (3, 7), (4, 6), (5, 7), (2, 3), (6, 7), (0, 2), (4, 5), (2, 6), (1, 3)
+    }, 
+    {
+        (0, 1), (10, 11), (2, 10), (8, 10), (2, 3), (0, 2), (8, 9), (9, 11), (0, 8), (1, 3), (1, 9), (3, 11)
+    }, 
+    {
+        (0, 1), (0, 4), (9, 13), (1, 5), (4, 12), (12, 13), (5, 13), (4, 5), (8, 9), (8, 12), (0, 8), (1, 9)
+    }, 
+    {
+        (0, 4), (10, 14), (2, 10), (4, 6), (4, 12), (6, 14), (8, 10), (0, 2), (2, 6), (8, 12), (0, 8), (12, 14)
+    }, 
+    {
+        (10, 11), (9, 13), (10, 14), (8, 10), (12, 13), (8, 9), (11, 15), (8, 12), (9, 11), (13, 15), (14, 15), (12, 14)
+    }, 
+    {
+        (4, 6), (4, 12), (6, 14), (5, 7), (5, 13), (12, 13), (6, 7), (4, 5), (7, 15), (13, 15), (14, 15), (12, 14)
+    }, 
+    {
+        (10, 11), (10, 14), (3, 7), (2, 10), (6, 14), (2, 3), (6, 7), (2, 6), (11, 15), (7, 15), (14, 15), (3, 11)
+    }, 
+    {
+        (9, 13), (1, 5), (3, 7), (5, 7), (5, 13), (11, 15), (7, 15), (9, 11), (13, 15), (1, 3), (1, 9), (3, 11)
+    }
+]
+```
+
+Now we have a full-fledged cube data - all the vertices logically divided into edges and faces. We can start thinking about the math needed for presenting hypercubes in a 3D scene. Full code generating a cube:
+```py
+{% include_relative generate-vertices-and-faces.py %}
+```
+
+## Why all this?
+
+To understand why we need such an acrobatic approach to present a hypercube, we need to understand how it's gonna be presented.
+
+There are many approaches to present higher dimensions in 3D. I took this:
+
+> In order to present ND object in (N-1)D, calculate an intersection of this object with (N-1)D hyperplane.
+
+What does it mean? If we'd like to present a 3D cube for a 2D person, we'd pick an arbitrary 2D plane, cut our cube with it (calculate intersection), connect the intersection points and present the result 2D polygon to the 2D person.
+
+TODO IMAGE OF CUT 3D CUBE
+
+Similar with 4D. You have 4D cube, you _cut_ it with a 3D plane (basically a 3D space), connect the intersection points and present the result 3D object to the 3D person.
+
+TODO GIF OF CUT 4D CUBE

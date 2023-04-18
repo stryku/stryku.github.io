@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 """
-requirements.txt I used:
+requirements.txt:
 PyQt5==5.15.1
 pyqtgraph
 pyopengl
