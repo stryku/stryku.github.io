@@ -7,23 +7,23 @@ published: true
 this_includes: 2023-03-22-miltidimensional-game
 ---
 
-Some time ago I thought that it would be cool one day to be able to say: "I created a 4D game". So, I decided to create one. During the process of thinking I figured out that 4+D game sounds even cooler. And here we are.
+Some time ago, I thought that it would be cool one day to be able to say: "I created a 4D game". So, I decided to create one. During the process of thinking, I figured out that 4+D game sounds even cooler. And here we are.
 
 This is my first and hopefully not last post about me creating a multidimensional game. There will most likely be a lot of math, rendering pipelines, bugs, weird objects that I don't know if they look correct because we're unable to judge that because we don't think in more than 3D, and a lot of fun after actually creating the game.
 
-I want to blog about it because I already see that I forget how math and stuff work. I'm writing this to be able to come back and see. Maybe if will become useful for someone in the future.
+I want to blog about it because I already see that I forget how math and stuff work. I'm writing this to be able to come back and see. Maybe it's going to be useful for someone in the future.
 
-In this very first post I'll explain my journey to generating hypercubes (cubes in usually more than three dimensions) in a specific way, which allows me to present it nicely in 3D.
+In this very first post, I'll explain my journey to generating hypercubes (cubes in usually more than three dimensions) in a specific way, which allows me to present it nicely in 3D.
 
 # I don't know all this
 
-Before we start I want to say that I don't know this stuff. I'm learning and I will make mistakes. If I make one and you care enough please ping me on email or something. Always keen to learn more.
+Before we start, I want to say that I don't know this stuff. I'm learning and I will make mistakes. If I make one, and you care enough, please ping me on email or something. Always keen to learn more.
 
 # Baby steps
 
-So, like I said, I don't know much about making games and multidimensional math. Before committing to making such a game, I wanted to see if I can wrap my mind around math and present something that makes sense. Wanted to generate a hypercube of any (3+) dimensions, be able to move and rotate it and present it using 3D tools. I didn't want to use full-blown gaming engine and ready made libraries for multidimensional math. The first goal was to create as much from scratch as possible. So, decided to go with Python, pygraph and a small help with scipy.
+So, like I said, I don't know much about making games and multidimensional math. Before committing to making such a game, I wanted to see if I can wrap my mind around math and present something that makes sense. Wanted to generate a hypercube of any (3+) dimensions, be able to move and rotate it and present it using 3D tools. I didn't want to use a full-blown gaming engine and ready-made libraries for multidimensional math. The first goal was to create as much from scratch as possible. So, decided to go with Python, pygraph and a small help with scipy.
 
-Python because it's Python and it just works. Pygraph because it can display mesh with coloured faces and that's exactly what I wanted. Scipy because it can triangulate and that's exactly what I don't want to learn at this point - if I write mesh and coloring faces from scratch, I can live with scipy triangulating stuff for me.
+Python because it's Python and it just works. Pygraph because it can display mesh with colored faces and that's exactly what I wanted. Scipy because it can triangulate and that's exactly what I don't want to learn at this point - if I write mesh and coloring faces from scratch, I can live with scipy triangulating stuff for me.
 
 # Presenting 3D cube
 
@@ -31,7 +31,7 @@ Presenting a 3D cube is quite trivial these days. There are two ways that I cons
 
 #### 3D cube mesh
 
-We'll focus on cubes with edges of length 1, originated in the point `0, 0, 0`. Vertices of a 3D cube are quite simple. You just take all the permutations of zeros and ones of length 3, so:
+We'll focus on cubes with edges of length 1, originated in the point `0, 0, 0`. Vertices of a 3D cube are quite simple. You just take all the possible zeros and ones of length 3, so:
 ```
 x, y, z
 -------
@@ -95,7 +95,7 @@ face 5.0: 0, 1, 4
 face 5.1: 5, 1, 4
 ```
 
-Now, in order to nicely display the cube we need to assign colors to faces. One color for two triangles of given face:
+Now, in order to nicely display the cube, we need to assign colors to faces. One color for two triangles of given face:
 
 ```
 face 0.0: 0, 2, 4 - red
@@ -130,11 +130,11 @@ We get this simple cube:
 
 # Presenting 4D cube
 
-Presenting 4D cube is a bit trickier. Of course, we could just hard code everything but let's not do this. We want a generic approach to be able to generate and present a cube of any dimensions.
+Presenting 4D cube is a bit trickier. Of course, we could just hard code everything, but let's not do this. We want a generic approach to be able to generate and present a cube of any dimensions.
 
 What we know from the 3D cube section, we need to:
 1. Generate vertices of the cube.
-2. Know which vertices build given face.
+2. Know which vertices build a given face.
 3. Assign one color per face.
 
 ## Generating vertices
@@ -167,7 +167,7 @@ This will generate all the needed vertices consisting of 0 and 1, of length N. F
 
 We have a list of vertices, now we need to know how to build faces of the cube with them.
 
-As of now, the cube is not rotated, so each of its faces is parallel to one of the canonical axes. With this we can fairly easy generate vertices of all the faces.
+As of now, the cube is not rotated, so each of its faces is parallel to one of the canonical axes. With this, we can fairly easy generate vertices of all the faces.
 Consider the front face of a 3D cube. 
 
 
@@ -191,9 +191,9 @@ Now, the back face of the cube
 
 ![foo](/assets/miltidimensional-game/cube_4.png)
 
-I think we can see a pattern here. A face has all possible vertices with one axis constant.
+I think we can see a pattern here. A consists of all possible vertices with one axis constant.
 
-In order to generate faces of a 3D cube we should:
+In order to generate faces of a 3D cube, we should:
 1. Generate all possible vertices in 2D
 2. Insert 0 and 1 in all possible _places_ of the vertices
 
@@ -266,9 +266,9 @@ For `N=4` we end up with:
 
 ## Edges
 
-You know, vertices are cool but for presenting 4+D cubes in 3D we'll need edges at some point, in order to calculate an intersection of 4D edge with 3D hyperplane. More about it later. For now let's just assume we need edges.
+You know, vertices are cool but for presenting 4+D cubes in 3D we'll need edges at some point, in order to calculate an intersection of 4D edge with 3D hyperplane. For now, let's just assume we need edges.
 
-If we have a list of faces like above, then _discovering_ edges of every face is quite simple. We generate cubes of size 1, so all edges of all faces are going to have length 1. That means we can iterate over vertices of a face and if distance between two given vertices is 1, that's an edge.
+If we have a list of faces like above, then _discovering_ the edges of every face is quite simple. We generate cubes of size 1, so all edges of all faces are going to have length 1. That means we can iterate over vertices of a face and if the distance between two given vertices is 1, that's an edge.
 
 ```py
 def vertex_distance(a, b):
@@ -283,6 +283,7 @@ for face in faces:
     for v0 in face:
         for v1 in face:
             if vertex_distance(v0, v1) == 1:
+                # Sort in order to remove duplicates while adding to set().
                 edge = tuple(sorted((tuple(v0), tuple(v1))))
                 edges.add(edge)
 
@@ -416,11 +417,11 @@ The full code generating cube data:
 
 ## Why all this?
 
-To understand why we need such acrobatics to just present a hypercube, we need to understand how it's gonna be presented.
+To understand why we need such acrobatics to just present a hypercube, we need to understand how it's going to be presented.
 
 There are many approaches to present higher dimensions in 3D. I took this:
 
-> In order to present an ND object in an (N-1)D, calculate the intersection of this object with (N-1)D hyperplane.
+_In order to present an ND object in an (N-1)D, calculate the intersection of this object with (N-1)D hyperplane._
 
 What does it mean? If we'd like to present a 3D cube for a 2D person, we'd pick an arbitrary 2D plane, cut our cube with it (calculate intersection), connect the intersection points and present the result 2D polygon to the 2D person.
 
@@ -428,15 +429,15 @@ What does it mean? If we'd like to present a 3D cube for a 2D person, we'd pick 
 ![foo](/assets/miltidimensional-game/cube_6.png)
 ![foo](/assets/miltidimensional-game/cube_7.png)
 
-When a 2D plane cuts a 3D cube, each face is intersected in 0, 1 or 2 points. To fully present the result polygon, we're remembering colors of the cut faces. Thanks to that we have colorful edges of the polygon.
+When a 2D plane cuts a 3D cube, each face is intersected in 0, 1 or 2 points. To fully present the result polygon, we're remembering colors of the cut faces. Thanks to that, we have colorful edges of the polygon.
 
-Similar with 4D. You have 4D cube, you _cut_ it with a 3D plane (basically a 3D space), connect the intersection points and present the result 3D object to the 3D person. An example 4D cube (after some rotations):
+Similar with 4D. You have a 4D cube, you _cut_ it with a 3D plane (basically a 3D space), connect the intersection points and present the result 3D object to the 3D person. An example 4D cube (after some rotations):
 
 ![cool image](/assets/miltidimensional-game/cube4d.gif)
 
-As you can see here, each face of the result 3D object is of a different color. The approach is analogous - after intersection, remember colors of the 4D faces where given intersection points come from and use this color to paint the result face of a 3D object. 4D cube has 8 faces, the 3D representation should be have up to 8 faces as well.
+As you can see here, each face of the result 3D object is of a different color. The approach is analogous - after intersection, remember colors of the 4D faces where given intersection points come from and use this color to paint the result face of a 3D object. 4D cube has 8 faces, the 3D representation should have up to 8 faces as well.
 
-And that's why we wanted to have vertices logically divided into faces and edges. We can assign a color to one face, do the math and present result 3D object - all this without losing the original colors. 
+And that's why we wanted to have vertices logically divided into faces and edges. We can assign a color to one face, do the math and present the result 3D object - all this without losing the original colors. 
 
 
 How the math is done in Python? I'll explain it in the next posts. I realized this one is growing and let's cut it here.
