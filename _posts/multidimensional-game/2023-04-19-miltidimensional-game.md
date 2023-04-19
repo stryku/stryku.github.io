@@ -6,7 +6,7 @@ categories: game
 published: true
 ---
 
-Some time ago, I thought that it would be cool one day to be able to say: "I created a 4D game". So, I decided to create one. During the process of thinking, I figured out that 4+D game sounds even cooler. And here we are.
+Some time ago, I thought - _It would be cool to be able to say: "I created a 4D game!"_. So, I decided to create one. During the process of thinking, I figured out that 4+D game sounds even cooler. And here we are.
 
 This is my first and hopefully not last post about me creating a multidimensional game. There will most likely be a lot of math, rendering pipelines, bugs, weird objects that I don't know if they look correct because we're unable to judge that because we don't think in more than 3D, and a lot of fun after actually creating the game.
 
