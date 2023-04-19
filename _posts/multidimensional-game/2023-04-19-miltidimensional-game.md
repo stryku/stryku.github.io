@@ -1,10 +1,9 @@
 ---
 layout: post
 title:  "Multidimensional Game"
-date:   2023-03-22 20:35:17 +0100
+date:   2023-04-19 21:49:54 +0100
 categories: game
 published: true
-this_includes: 2023-03-22-miltidimensional-game
 ---
 
 Some time ago, I thought that it would be cool one day to be able to say: "I created a 4D game". So, I decided to create one. During the process of thinking, I figured out that 4+D game sounds even cooler. And here we are.
