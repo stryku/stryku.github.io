@@ -7,9 +7,9 @@ published: true
 this_includes: 2023-03-22-miltidimensional-game
 ---
 
-Some time ago I thought that it would be cool to one day be able to say: "I created a 4D game". So, I decided to create one. During the process of thinking I figured out that 4+D game actually sounds even cooler. And here we are.
+Some time ago I thought that it would be cool one day to be able to say: "I created a 4D game". So, I decided to create one. During the process of thinking I figured out that 4+D game sounds even cooler. And here we are.
 
-This is my first and hopefully not last post about me creating a multidimensional game. There will most likely be a lot of math, rendering pipelines, bugs, weird objects that I don't know if they look correct because we're unable to judge that because we don't think in more than 3D and a lot of fun after actually creating the game.
+This is my first and hopefully not last post about me creating a multidimensional game. There will most likely be a lot of math, rendering pipelines, bugs, weird objects that I don't know if they look correct because we're unable to judge that because we don't think in more than 3D, and a lot of fun after actually creating the game.
 
 I want to blog about it because I already see that I forget how math and stuff work. I'm writing this to be able to come back and see. Maybe if will become useful for someone in the future.
 
@@ -45,7 +45,7 @@ x, y, z
 1, 1, 1
 ```
 
-What's not so trivial is logically creating faces of the cube mesh - the triangles that are going to be presented by OpenGL on the screen. It's not trivial, but in 3D it's still not much work to do it manually, which we're going to do now just to explicitly show what the code needs to do.
+What's not so trivial is logically creating faces of the cube mesh - the triangles that are going to be presented by OpenGL on the screen. It's not trivial, but in 3D it's still not much work to do it manually. We're going to do it now just to explicitly show what the code needs to do.
 
 Let's keep all the vertices in an array:
 ```
@@ -62,7 +62,8 @@ Let's keep all the vertices in an array:
 ```
 
 So, the cube looks like this:
-TODO IMAGE CUBE EDGES
+
+![foo](/assets/miltidimensional-game/cube_1.png)
 
 Every face of the cube consists of two triangles. The triangles are represented by indices of three vertices. E.g. the front face can be represented by these two:
 ```
@@ -70,7 +71,8 @@ face 0.0: 0, 2, 4
 face 0.1: 6, 2, 4
 ```
 
-TODO IMAGE FRONT FACE
+![foo](/assets/miltidimensional-game/cube_2.png)
+
 
 Doing the same with other faces we end up with:
 ```
@@ -168,7 +170,6 @@ We have a list of vertices, now we need to know how to build faces of the cube w
 As of now, the cube is not rotated, so each of its faces is parallel to one of the canonical axes. With this we can fairly easy generate vertices of all the faces.
 Consider the front face of a 3D cube. 
 
-TODO IMG 1
 
 The face consist of vertices
 ```
@@ -177,6 +178,9 @@ The face consist of vertices
 1, 1, 0
 0, 1, 0
 ```
+
+![foo](/assets/miltidimensional-game/cube_3.png)
+
 Now, the back face of the cube
 ```
 0, 0, 1
@@ -184,6 +188,8 @@ Now, the back face of the cube
 1, 1, 1
 0, 1, 1
 ```
+
+![foo](/assets/miltidimensional-game/cube_4.png)
 
 I think we can see a pattern here. A face has all possible vertices with one axis constant.
 
@@ -418,9 +424,11 @@ There are many approaches to present higher dimensions in 3D. I took this:
 
 What does it mean? If we'd like to present a 3D cube for a 2D person, we'd pick an arbitrary 2D plane, cut our cube with it (calculate intersection), connect the intersection points and present the result 2D polygon to the 2D person.
 
-TODO IMAGE OF CUT 3D CUBE
+![foo](/assets/miltidimensional-game/cube_5.png)
+![foo](/assets/miltidimensional-game/cube_6.png)
+![foo](/assets/miltidimensional-game/cube_7.png)
 
-If a 2D plane cuts a 3D cube, each face is intersected in 0, 1 or 2 points. To fully present the result polygon, we're remembering colors of the cut faces. Thanks to that we have colorful edges of the polygon.
+When a 2D plane cuts a 3D cube, each face is intersected in 0, 1 or 2 points. To fully present the result polygon, we're remembering colors of the cut faces. Thanks to that we have colorful edges of the polygon.
 
 Similar with 4D. You have 4D cube, you _cut_ it with a 3D plane (basically a 3D space), connect the intersection points and present the result 3D object to the 3D person. An example 4D cube (after some rotations):
 
