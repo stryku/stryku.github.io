@@ -3,15 +3,19 @@ layout: post
 title:  "Multidimensional Game Next"
 date:   2023-04-26 22:35:07 +0200
 categories: game
-published: false
+published: true
 ---
 
 
 
-This is an inline equation: $$V_{sphere} = \frac{4}{3}\pi r^3$$,<br>
+This is an inline equation: $V_{sphere} = \frac{4}{3}\pi r^3$,
 followed by a display style equation:
 
-$$V_{sphere} = \frac{4}{3}\pi r^3$$
+$$
+\begin{align}
+V_{sphere} = \frac{4}{3}\pi r^3
+\end{align}
+$$
 
 
 In the last post we described the approach of displaying 4D cube in 3D. It's about time to describe math behind it and code it. Steps to do are:
