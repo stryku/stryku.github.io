@@ -3,8 +3,16 @@ layout: post
 title:  "Multidimensional Game Next"
 date:   2023-04-26 22:35:07 +0200
 categories: game
-published: true
+published: false
 ---
+
+
+
+This is an inline equation: $$V_{sphere} = \frac{4}{3}\pi r^3$$,<br>
+followed by a display style equation:
+
+$$V_{sphere} = \frac{4}{3}\pi r^3$$
+
 
 In the last post we described the approach of displaying 4D cube in 3D. It's about time to describe math behind it and code it. Steps to do are:
 1. Define the plane that we'll intersect with our cube.
@@ -25,6 +33,8 @@ We can be given any points. There might be a situation where the points don't de
 (2, 4, 6, 8)
 (1, 1, 1, 1)
 ```
+
+
 
 
 # Thanks for reading o/
