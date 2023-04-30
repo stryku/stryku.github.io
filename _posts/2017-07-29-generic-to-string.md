@@ -3,7 +3,7 @@ layout: post
 title:  "Generic toString()"
 date:   2017-07-29 00:00:00 +0200
 categories: 
-published: false
+published: true
 ---
 
 # Table of Contents:
