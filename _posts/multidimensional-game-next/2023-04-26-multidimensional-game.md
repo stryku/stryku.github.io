@@ -3,7 +3,7 @@ layout: post
 title:  "Multidimensional Game Next"
 date:   2023-04-26 22:35:07 +0200
 categories: game
-published: false
+published: true
 ---
 
 
@@ -12,9 +12,8 @@ published: false
 
 In the last post we described the approach of displaying 4D cube in 3D.
 
-> Q: It's not cool that you use 3D, 4D, ... You should use $\mathbb{R^3}$, $\mathbb{R^4}, ...$!
-
-> A: Yes, I know. But I'll use 3D in the text and $\mathbb{R^3}$ in math formulas. It's easier to write posts like this. Sorry. I regret nothing.
+* Q: It's not cool that you use 3D, 4D, ... You should use $\mathbb{R^3}$, $\mathbb{R^4}, ...$!
+* A: Yes, I know. But I'll use 3D in the text and $\mathbb{R^3}$ in math formulas. It's easier to write posts like this. Sorry. I regret nothing.
 
 It's about time to describe math behind it and code it. Steps to do are:
 1. Define the plane that we'll intersect with our cube.
@@ -40,7 +39,7 @@ v1 = p2 - p1
 v2 = p3 - p1
 ```
 
-So, yea, they _should_ span a 2D plane. But, there are cases where they won't. To ensure the vectors properly span a 2D plane, we should ensure they are linearly independent. They are linearly independent when:
+So, yea, they _should_ span a 2D plane. But, there are cases where they won't. To ensure the vectors properly span a 2D plane, we need to ensure they are linearly independent. They are linearly independent when:
 
 $$
 \begin{align}
@@ -51,6 +50,30 @@ v_{1}, v_{2}, ..., v_{n} \in V \\
 \end{align}
 $$
 
+meaning that there's no way to describe a $v_{i}$ as a linear combination of other vectors.
+
+Having vectors and wondering whether they span $R^N$ we can create an NxN matrix out of them and calculate its order.
+
+So, having our $v_{1} = (v_{1x}, v_{1y}, v_{1z})$ and $v_{2} = (v_{2x}, v_{2y}, v_{2z})$ and wondering whether they span $R^2$, we create matrices
+
+$$
+\begin{align}
+
+\begin{equation}\label{eq:example_matrix}
+    \mathbf{A} = \left[ \begin{array}{cc}
+        1 & 2 \\
+        3 & 4 \\
+    \end{array} \right]
+\end{equation}
+
+
+
+\end{align}
+$$
+
+
+
+# TODOOOOO
 
 But, it can turn out that it's impossible to create a plane out of these points. E.g. these 3D points that we'd like to describe a plane won't do good.
 ```
