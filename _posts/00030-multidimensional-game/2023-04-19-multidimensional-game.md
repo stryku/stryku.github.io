@@ -2,7 +2,7 @@
 layout: post
 title:  "Multidimensional Game"
 date:   2023-04-19 21:53:17 +0200
-categories: game
+categories: multidimensional-game
 published: true
 ---
 

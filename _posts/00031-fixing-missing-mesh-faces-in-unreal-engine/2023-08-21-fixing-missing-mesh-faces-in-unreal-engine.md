@@ -1,8 +1,8 @@
 ---
 layout: post
 title:  "Fixing missing mesh faces in Unreal Engine"
-date:   2023-08-20 15:51:42 +0200
-categories: game
+date:   2023-08-21 23:01:12 +0200
+categories: multidimensional-game
 published: true
 ---
 
