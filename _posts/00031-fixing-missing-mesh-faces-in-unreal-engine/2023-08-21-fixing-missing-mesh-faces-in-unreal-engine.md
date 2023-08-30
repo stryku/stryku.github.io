@@ -6,14 +6,14 @@ categories: multidimensional-game
 published: true
 ---
 
-For the multidimensional game that I'm creating, there are a couple of concepts that I need to understand, in order to efficiently develop the game. Some time ago I finished a multidimensional cube rendering using Python. It was a simple POC just to make sure I get the concept.
+For the multidimensional game I'm creating, there are a couple of concepts that I need to understand, in order to efficiently develop the game. Some time ago I finished a multidimensional cube rendering using Python. It was a simple POC just to make sure I get the concept.
 
-~Two weeks ago I decided it's about time to try to implement the cube in the environment which I'm gonna use for the game - Unreal Engine (UE). It was a journey, I must admit.
+~Two weeks ago I decided it's about time to try to implement the cube in the environment which is gonna be used for the game - Unreal Engine (UE). It was a journey, I must admit.
 
 
 # Mesh from C++
 
-It is still gonna be a POC, so I didn't want to go down the rabbit hole of GPU optimizations (which I plan for the final game). I just want to be able to build a 3D mesh out of a multidimensional cube and present it in Unreal. Simple enough.
+It was meant to be a simple POC, so I didn't want to go down the rabbit hole of GPU optimizations (which I plan for the final game). I just want to be able to build a 3D mesh out of a multidimensional cube and present it in Unreal. Simple enough.
 
 Found this great tutorial of exactly what I needed - manipulating meshes at runtime from the C++ level: [https://www.gradientspace.com/tutorials/2020/10/23/runtime-mesh-generation-in-ue426](https://www.gradientspace.com/tutorials/2020/10/23/runtime-mesh-generation-in-ue426)
 
