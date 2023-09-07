@@ -266,7 +266,7 @@ Now, what I have to do is to check if the ordering of the indices of the face ob
 
 ![foo](/assets/2023-08-20-fixing-missing-mesh-faces-in-unreal-engine/004_cross_product.png)
 
-If the dot product is zero or greater than zero, then the normal points outwards, meaning the vertices are in a correct order.
+If the dot product is zero or greater than zero, then the normal points outwards, meaning the vertices are in the correct order.
 
 If the dor product is less than zero, the normal points inwards and we need to rearrange the vertices.
 
