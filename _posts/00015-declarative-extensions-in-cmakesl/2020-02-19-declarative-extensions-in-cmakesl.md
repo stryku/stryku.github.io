@@ -1,7 +1,7 @@
 ---
 layout: post_without_latex
 title:  "Declarative extensions in CMakeSL"
-date:   2018-10-12 00:00:00 +0200
+date:   2020-02-19 00:00:00 +0200
 categories: cpp
 published: true
 ---
