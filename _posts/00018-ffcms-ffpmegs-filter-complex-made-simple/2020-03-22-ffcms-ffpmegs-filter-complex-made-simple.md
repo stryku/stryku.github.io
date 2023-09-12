@@ -1,7 +1,7 @@
 ---
 layout: post_without_latex
 title:  "ffcms - FFmpeg's -filter_complex made simple"
-date:   2020-03-12 00:00:00 +0200
+date:   2020-03-22 00:00:00 +0200
 categories: cpp
 published: true
 ---
