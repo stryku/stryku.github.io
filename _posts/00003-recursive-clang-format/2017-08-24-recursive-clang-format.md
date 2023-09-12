@@ -2,7 +2,7 @@
 layout: post
 title:  "Open source fun #0: Recursive clang-format"
 date:   2017-08-24 00:00:00 +0200
-categories: 
+categories: cpp
 published: true
 ---
 

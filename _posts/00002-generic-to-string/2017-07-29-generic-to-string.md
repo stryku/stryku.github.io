@@ -2,7 +2,7 @@
 layout: post
 title:  "Generic toString()"
 date:   2017-07-29 00:00:00 +0200
-categories: 
+categories: cpp
 published: true
 ---
 

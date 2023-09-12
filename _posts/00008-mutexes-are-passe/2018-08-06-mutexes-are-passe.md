@@ -2,7 +2,7 @@
 layout: post_without_latex
 title:  "Mutexes are passé"
 date:   2018-08-06 00:00:00 +0200
-categories: 
+categories: cpp
 published: true
 ---
 

@@ -2,7 +2,7 @@
 layout: post
 title:  "ctai: compile-time assembly interpreter"
 date:   2017-02-09 00:00:00 +0200
-categories: 
+categories: cpp
 published: true
 ---
 
