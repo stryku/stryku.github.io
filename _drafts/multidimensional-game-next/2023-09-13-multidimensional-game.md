@@ -162,13 +162,137 @@ v_1 = p_2 - p_1 = (v_{1x}, v_{1y}, v_{1z}, v_{1w}) \\
 v_2 = p_3 - p_1 = (v_{2x}, v_{2y}, v_{2z}, v_{2w}) \\
 v_3 = p_4 - p_1 = (v_{3x}, v_{3y}, v_{3z}, v_{3w}) \\
 
+\\
+
+M_1 =
+\begin{bmatrix}
+v_{1x} & v_{1y} & v_{1z}\\
+v_{2x} & v_{2y} & v_{2z}\\
+v_{3x} & v_{3y} & v_{3z}
+\end{bmatrix}
+
+,
+
+M_2 =
+\begin{bmatrix}
+v_{1x} & v_{1y} & v_{1w}\\
+v_{2x} & v_{2y} & v_{2w}\\
+v_{3x} & v_{3y} & v_{3w}
+\end{bmatrix}
+
+,
+
+M_3 =
+\begin{bmatrix}
+v_{1x} & v_{1z} & v_{1w}\\
+v_{2x} & v_{2z} & v_{2w}\\
+v_{3x} & v_{3z} & v_{3w}
+\end{bmatrix}
+
+,
+
+M_4 =
+\begin{bmatrix}
+v_{1y} & v_{1z} & v_{1w}\\
+v_{2y} & v_{2z} & v_{2w}\\
+v_{3y} & v_{3z} & v_{3w}
+\end{bmatrix}
+
+\\
+\\
+
+d_1 =
+\begin{vmatrix}
+v_{1x} & v_{1y} & v_{1z}\\
+v_{2x} & v_{2y} & v_{2z}\\
+v_{3x} & v_{3y} & v_{3z}
+\end{vmatrix}
+
+,
+
+d_2 =
+\begin{vmatrix}
+v_{1x} & v_{1y} & v_{1w}\\
+v_{2x} & v_{2y} & v_{2w}\\
+v_{3x} & v_{3y} & v_{3w}
+\end{vmatrix}
+
+,
+
+d_3 =
+\begin{vmatrix}
+v_{1x} & v_{1z} & v_{1w}\\
+v_{2x} & v_{2z} & v_{2w}\\
+v_{3x} & v_{3z} & v_{3w}
+\end{vmatrix}
+
+,
+
+d_4 =
+\begin{vmatrix}
+v_{1y} & v_{1z} & v_{1w}\\
+v_{2y} & v_{2z} & v_{2w}\\
+v_{3y} & v_{3z} & v_{3w}
+\end{vmatrix}
+
 \end{align*}
 $$
 
 
+## Finding plane equation
+
+At this point we know that our points really do span a 3-dimensional hyperplane. We need to find its equation.
+
+### Checking simplest case
+
+Firs of, we can check one thing - if any of the terms is constant in all the specified points, the plane equation is trivial. Consider e.g. points like this:
 
 
+$$
+\begin{align*}
 
+p_1 = (2,8,44,12) \\
+p_2 = (2,3,2,1) \\
+p_3 = (2,-2,2,-2) \\
+p_4 = (2,0,0,0) \\
+
+\end{align*}
+$$
+
+then all the terms but $x$ aren't important. They don't matter. So, the plane equation is
+
+$$
+\begin{align*}
+x = 2
+\end{align*}
+$$
+
+
+And that's it. This is the whole 3-dimensional plane equation. It's not the most interesting of the hyperplanes, but it is a hyperplane, for sure.
+
+If none of the terms is constant, we need to actually calculate the plane equation.
+
+### Finding axis
+
+If the above is not the case, we go axis by axis until we find one that doesn't lay on our hyperplane. In order to do this, we check every of the vectors $(1,0,0,0), (0,1,0,0), (0,0,1,0) and (0,0,0,1)$ whether it lays outside of our plane, in other words
+
+$$
+\begin{align*}
+(1,0,0,0) \notin Lin(\{v_1, v_2, v_3\}) \\
+... \\
+(0,0,0,1) \notin Lin(\{v_1, v_2, v_3\}) \\
+\end{align*}
+$$
+
+E.g. if $(1,0,0,0) \notin Lin(\{v_1, v_2, v_3\})$, then the plane equation is $x = ay + bz + cw + d$. If $(0,0,1,0) \notin Lin(\{v_1, v_2, v_3\})$ then $z = ax + by + cw + d$, and so on.
+
+We can check that by calculating determinant of such matrix and checking if it's different than zero.
+
+$$
+\begin{align*}
+... TODO
+\end{align*}
+$$
 
 # TODOOOOO
 
