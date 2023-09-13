@@ -42,12 +42,12 @@ v2 = p3 - p1
 So, yea, they _should_ span a 2D plane. But, there are cases where they won't. To ensure the vectors properly span a 2D plane, we need to ensure they are linearly independent. They are linearly independent when:
 
 $$
-\begin{align}
+\begin{align*}
 v_{1}, v_{2}, ..., v_{n} \in V \\
 
 \alpha_{1}*v_{1} + \alpha_{2}*v_{2} + ... + \alpha_{n}*v_{n} = \vec{0} \iff \alpha_{1} = \alpha_{2} = ... = \alpha_{n} = 0
 
-\end{align}
+\end{align*}
 $$
 
 meaning that there's no way to describe a $v_{i}$ as a linear combination of other vectors.
@@ -57,7 +57,7 @@ Having vectors and wondering whether they span $R^N$ we can create an NxN matrix
 So, having our $v_{1} = (v_{1x}, v_{1y}, v_{1z})$ and $v_{2} = (v_{2x}, v_{2y}, v_{2z})$ and wondering whether they span $R^2$, we have to check whether the rank of the matrix is equal to 2
 
 $$
-\begin{align}
+\begin{align*}
 
 
 \newcommand{\MyMatrix}{
@@ -72,14 +72,14 @@ $$
 r = rank \left( \MyMatrix \right)
 
 
-\end{align}
+\end{align*}
 $$
 
 
 In order to check that, we create matrices
 
 $$
-\begin{align}
+\begin{align*}
 
 M_1 =
 \begin{bmatrix}
@@ -103,14 +103,14 @@ v_{1y} & v_{1z}\\
 v_{2y} & v_{2z}
 \end{bmatrix}
 
-\end{align}
+\end{align*}
 $$
 
 ..calculate their determinants..
 
 
 $$
-\begin{align}
+\begin{align*}
 
 d_1 =
 \begin{vmatrix}
@@ -134,7 +134,7 @@ v_{1y} & v_{1z}\\
 v_{2y} & v_{2z}
 \end{vmatrix}
 
-\end{align}
+\end{align*}
 $$
 
 ..and check if any of them is different than zero, then our matrix have rank 2, so we know it spans a 2D plane.
@@ -148,7 +148,7 @@ In higher dimension it works analogically. We have some 4D points and check if t
 
 
 $$
-\begin{align}
+\begin{align*}
 
 
 p_1 = (p_{1x}, p_{1y}, p_{1z}, p_{1w}) \\
@@ -162,7 +162,7 @@ v_1 = p_2 - p_1 = (v_{1x}, v_{1y}, v_{1z}, v_{1w}) \\
 v_2 = p_3 - p_1 = (v_{2x}, v_{2y}, v_{2z}, v_{2w}) \\
 v_3 = p_4 - p_1 = (v_{3x}, v_{3y}, v_{3z}, v_{3w}) \\
 
-\end{align}
+\end{align*}
 $$
 
 
