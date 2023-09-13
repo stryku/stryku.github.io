@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Multidimensional Game Next"
-date:   2023-04-26 22:35:07 +0200
+date:   2023-09-13 22:35:07 +0200
 categories: game
 published: true
 ---
@@ -24,11 +24,11 @@ It's about time to describe math behind it and code it. Steps to do are:
 
 A plane can be defined in a couple of ways. I took the approach of selecting points and finding the plane equation that the points lay on. So, e.g. giving three points : `(1, 2, 3)`, `(-1, -1, 3)` and `(3, 2, 1)`, we want to find the equation of the 2D plane: `3x - 2y + 3z - 8 = 0`.
 
-This was an example from 3D. From now on we'll work in 4D. 
+This was an example from 3D.
 
 ## Validating points
 
-We'd like to take any points specified by user and compute A plane out of it.
+We'd like to take any points specified by user and compute a plane out of it.
 The first step is to calculate vectors spanning our plane based on these points. Let's assume we have points in 3D:
 ```
 p1, p2, p3
@@ -106,7 +106,69 @@ v_{2y} & v_{2z}
 \end{align}
 $$
 
-And check if 
+..calculate their determinants..
+
+
+$$
+\begin{align}
+
+d_1 =
+\begin{vmatrix}
+v_{1x} & v_{1y}\\
+v_{2x} & v_{2y}
+\end{vmatrix}
+
+,
+
+d_2 =
+\begin{vmatrix}
+v_{1x} & v_{1z}\\
+v_{2x} & v_{2z}
+\end{vmatrix}
+
+,
+
+d_3 =
+\begin{vmatrix}
+v_{1y} & v_{1z}\\
+v_{2y} & v_{2z}
+\end{vmatrix}
+
+\end{align}
+$$
+
+..and check if any of them is different than zero, then our matrix have rank 2, so we know it spans a 2D plane.
+
+If all of them are zero, we can't go further with the points. We need to figure out a different set.
+
+## Validating points in higher dimension
+
+In higher dimension it works analogically. We have some 4D points and check if they span a 3-dimensional hyperplane.
+
+
+
+$$
+\begin{align}
+
+
+p_1 = (p_{1x}, p_{1y}, p_{1z}, p_{1w}) \\
+p_2 = (p_{2x}, p_{2y}, p_{2z}, p_{2w}) \\
+p_3 = (p_{3x}, p_{3y}, p_{3z}, p_{3w}) \\
+p_4 = (p_{4x}, p_{4y}, p_{4z}, p_{4w}) \\
+
+\\
+
+v_1 = p_2 - p_1 = (v_{1x}, v_{1y}, v_{1z}, v_{1w}) \\
+v_2 = p_3 - p_1 = (v_{2x}, v_{2y}, v_{2z}, v_{2w}) \\
+v_3 = p_4 - p_1 = (v_{3x}, v_{3y}, v_{3z}, v_{3w}) \\
+
+\end{align}
+$$
+
+
+
+
+
 
 # TODOOOOO
 
