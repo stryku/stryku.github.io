@@ -3,7 +3,7 @@ layout: post
 title:  "Multidimensional Game Next"
 date:   2023-04-26 22:35:07 +0200
 categories: game
-published: false
+published: true
 ---
 
 
@@ -54,24 +54,59 @@ meaning that there's no way to describe a $v_{i}$ as a linear combination of oth
 
 Having vectors and wondering whether they span $R^N$ we can create an NxN matrix out of them and calculate its order.
 
-So, having our $v_{1} = (v_{1x}, v_{1y}, v_{1z})$ and $v_{2} = (v_{2x}, v_{2y}, v_{2z})$ and wondering whether they span $R^2$, we create matrices
+So, having our $v_{1} = (v_{1x}, v_{1y}, v_{1z})$ and $v_{2} = (v_{2x}, v_{2y}, v_{2z})$ and wondering whether they span $R^2$, we have to check whether the rank of the matrix is equal to 2
 
 $$
 \begin{align}
 
-\begin{equation}\label{eq:example_matrix}
-    \mathbf{A} = \left[ \begin{array}{cc}
-        1 & 2 \\
-        3 & 4 \\
-    \end{array} \right]
-\end{equation}
 
+\newcommand{\MyMatrix}{
+  \begin{bmatrix}
+    v_{1x} & v_{1y} & v_{1z}\\
+    v_{2x} & v_{2y} & v_{2z}
+  \end{bmatrix}
+}
+
+
+
+r = rank \left( \MyMatrix \right)
 
 
 \end{align}
 $$
 
 
+In order to check that, we create matrices
+
+$$
+\begin{align}
+
+M_1 =
+\begin{bmatrix}
+v_{1x} & v_{1y}\\
+v_{2x} & v_{2y}
+\end{bmatrix}
+
+,
+
+M_2 =
+\begin{bmatrix}
+v_{1x} & v_{1z}\\
+v_{2x} & v_{2z}
+\end{bmatrix}
+
+,
+
+M_3 =
+\begin{bmatrix}
+v_{1y} & v_{1z}\\
+v_{2y} & v_{2z}
+\end{bmatrix}
+
+\end{align}
+$$
+
+And check if 
 
 # TODOOOOO
 
