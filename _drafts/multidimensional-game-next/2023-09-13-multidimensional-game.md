@@ -43,9 +43,9 @@ So, yea, they _should_ span a 2D plane. But, there are cases where they won't. T
 
 $$
 \begin{align*}
-v_{1}, v_{2}, ..., v_{n} \in V \\
+  v_{1}, v_{2}, ..., v_{n} \in V \\
 
-\alpha_{1}*v_{1} + \alpha_{2}*v_{2} + ... + \alpha_{n}*v_{n} = \vec{0} \iff \alpha_{1} = \alpha_{2} = ... = \alpha_{n} = 0
+  \alpha_{1}*v_{1} + \alpha_{2}*v_{2} + ... + \alpha_{n}*v_{n} = \vec{0} \iff \alpha_{1} = \alpha_{2} = ... = \alpha_{n} = 0
 
 \end{align*}
 $$
@@ -59,18 +59,14 @@ So, having our $v_{1} = (v_{1x}, v_{1y}, v_{1z})$ and $v_{2} = (v_{2x}, v_{2y}, 
 $$
 \begin{align*}
 
+  \newcommand{\MyMatrix}{
+    \begin{bmatrix}
+      v_{1x} & v_{1y} & v_{1z}\\
+      v_{2x} & v_{2y} & v_{2z}
+    \end{bmatrix}
+  }
 
-\newcommand{\MyMatrix}{
-  \begin{bmatrix}
-    v_{1x} & v_{1y} & v_{1z}\\
-    v_{2x} & v_{2y} & v_{2z}
-  \end{bmatrix}
-}
-
-
-
-r = rank \left( \MyMatrix \right)
-
+  r = rank \left( \MyMatrix \right)
 
 \end{align*}
 $$
@@ -81,27 +77,27 @@ In order to check that, we create matrices
 $$
 \begin{align*}
 
-M_1 =
-\begin{bmatrix}
-v_{1x} & v_{1y}\\
-v_{2x} & v_{2y}
-\end{bmatrix}
+  M_1 =
+    \begin{bmatrix}
+      v_{1x} & v_{1y}\\
+      v_{2x} & v_{2y}
+    \end{bmatrix}
 
-,
+  ,
 
-M_2 =
-\begin{bmatrix}
-v_{1x} & v_{1z}\\
-v_{2x} & v_{2z}
-\end{bmatrix}
+  M_2 =
+    \begin{bmatrix}
+      v_{1x} & v_{1z}\\
+      v_{2x} & v_{2z}
+    \end{bmatrix}
 
-,
+  ,
 
-M_3 =
-\begin{bmatrix}
-v_{1y} & v_{1z}\\
-v_{2y} & v_{2z}
-\end{bmatrix}
+  M_3 =
+    \begin{bmatrix}
+      v_{1y} & v_{1z}\\
+      v_{2y} & v_{2z}
+    \end{bmatrix}
 
 \end{align*}
 $$
