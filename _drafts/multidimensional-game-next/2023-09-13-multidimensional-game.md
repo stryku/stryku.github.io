@@ -3,7 +3,7 @@ layout: post
 title:  "Multidimensional Game Next"
 date:   2023-09-13 22:35:07 +0200
 categories: multidimensional-game
-published: false
+published: true
 ---
 
 
@@ -151,89 +151,89 @@ $$
 \begin{align*}
 
 
-p_1 = (p_{1x}, p_{1y}, p_{1z}, p_{1w}) \\
-p_2 = (p_{2x}, p_{2y}, p_{2z}, p_{2w}) \\
-p_3 = (p_{3x}, p_{3y}, p_{3z}, p_{3w}) \\
-p_4 = (p_{4x}, p_{4y}, p_{4z}, p_{4w}) \\
+  p_1 = (p_{1x}, p_{1y}, p_{1z}, p_{1w}) \\
+  p_2 = (p_{2x}, p_{2y}, p_{2z}, p_{2w}) \\
+  p_3 = (p_{3x}, p_{3y}, p_{3z}, p_{3w}) \\
+  p_4 = (p_{4x}, p_{4y}, p_{4z}, p_{4w}) \\
 
-\\
+  \\
 
-v_1 = p_2 - p_1 = (v_{1x}, v_{1y}, v_{1z}, v_{1w}) \\
-v_2 = p_3 - p_1 = (v_{2x}, v_{2y}, v_{2z}, v_{2w}) \\
-v_3 = p_4 - p_1 = (v_{3x}, v_{3y}, v_{3z}, v_{3w}) \\
+  v_1 = p_2 - p_1 = (v_{1x}, v_{1y}, v_{1z}, v_{1w}) \\
+  v_2 = p_3 - p_1 = (v_{2x}, v_{2y}, v_{2z}, v_{2w}) \\
+  v_3 = p_4 - p_1 = (v_{3x}, v_{3y}, v_{3z}, v_{3w}) \\
 
-\\
+  \\
 
-M_1 =
-\begin{bmatrix}
-v_{1x} & v_{1y} & v_{1z}\\
-v_{2x} & v_{2y} & v_{2z}\\
-v_{3x} & v_{3y} & v_{3z}
-\end{bmatrix}
+  M_1 =
+    \begin{bmatrix}
+      v_{1x} & v_{1y} & v_{1z}\\
+      v_{2x} & v_{2y} & v_{2z}\\
+      v_{3x} & v_{3y} & v_{3z}
+    \end{bmatrix}
 
-,
+  ,
 
-M_2 =
-\begin{bmatrix}
-v_{1x} & v_{1y} & v_{1w}\\
-v_{2x} & v_{2y} & v_{2w}\\
-v_{3x} & v_{3y} & v_{3w}
-\end{bmatrix}
+  M_2 =
+    \begin{bmatrix}
+      v_{1x} & v_{1y} & v_{1w}\\
+      v_{2x} & v_{2y} & v_{2w}\\
+      v_{3x} & v_{3y} & v_{3w}
+    \end{bmatrix}
 
-,
+  ,
 
-M_3 =
-\begin{bmatrix}
-v_{1x} & v_{1z} & v_{1w}\\
-v_{2x} & v_{2z} & v_{2w}\\
-v_{3x} & v_{3z} & v_{3w}
-\end{bmatrix}
+  M_3 =
+    \begin{bmatrix}
+      v_{1x} & v_{1z} & v_{1w}\\
+      v_{2x} & v_{2z} & v_{2w}\\
+      v_{3x} & v_{3z} & v_{3w}
+    \end{bmatrix}
 
-,
+  ,
 
-M_4 =
-\begin{bmatrix}
-v_{1y} & v_{1z} & v_{1w}\\
-v_{2y} & v_{2z} & v_{2w}\\
-v_{3y} & v_{3z} & v_{3w}
-\end{bmatrix}
+  M_4 =
+    \begin{bmatrix}
+      v_{1y} & v_{1z} & v_{1w}\\
+      v_{2y} & v_{2z} & v_{2w}\\
+      v_{3y} & v_{3z} & v_{3w}
+    \end{bmatrix}
 
-\\
-\\
+  \\
+  \\
 
-d_1 =
-\begin{vmatrix}
-v_{1x} & v_{1y} & v_{1z}\\
-v_{2x} & v_{2y} & v_{2z}\\
-v_{3x} & v_{3y} & v_{3z}
-\end{vmatrix}
+  d_1 =
+    \begin{vmatrix}
+      v_{1x} & v_{1y} & v_{1z}\\
+      v_{2x} & v_{2y} & v_{2z}\\
+      v_{3x} & v_{3y} & v_{3z}
+    \end{vmatrix}
 
-,
+  ,
 
-d_2 =
-\begin{vmatrix}
-v_{1x} & v_{1y} & v_{1w}\\
-v_{2x} & v_{2y} & v_{2w}\\
-v_{3x} & v_{3y} & v_{3w}
-\end{vmatrix}
+  d_2 =
+    \begin{vmatrix}
+      v_{1x} & v_{1y} & v_{1w}\\
+      v_{2x} & v_{2y} & v_{2w}\\
+      v_{3x} & v_{3y} & v_{3w}
+    \end{vmatrix}
 
-,
+  ,
 
-d_3 =
-\begin{vmatrix}
-v_{1x} & v_{1z} & v_{1w}\\
-v_{2x} & v_{2z} & v_{2w}\\
-v_{3x} & v_{3z} & v_{3w}
-\end{vmatrix}
+  d_3 =
+    \begin{vmatrix}
+      v_{1x} & v_{1z} & v_{1w}\\
+      v_{2x} & v_{2z} & v_{2w}\\
+      v_{3x} & v_{3z} & v_{3w}
+    \end{vmatrix}
 
-,
+  ,
 
-d_4 =
-\begin{vmatrix}
-v_{1y} & v_{1z} & v_{1w}\\
-v_{2y} & v_{2z} & v_{2w}\\
-v_{3y} & v_{3z} & v_{3w}
-\end{vmatrix}
+  d_4 =
+    \begin{vmatrix}
+      v_{1y} & v_{1z} & v_{1w}\\
+      v_{2y} & v_{2z} & v_{2w}\\
+      v_{3y} & v_{3z} & v_{3w}
+    \end{vmatrix}
 
 \end{align*}
 $$
@@ -251,10 +251,10 @@ Firs of, we can check one thing - if any of the terms is constant in all the spe
 $$
 \begin{align*}
 
-p_1 = (2,8,44,12) \\
-p_2 = (2,3,2,1) \\
-p_3 = (2,-2,2,-2) \\
-p_4 = (2,0,0,0) \\
+  p_1 = (2,8,44,12) \\
+  p_2 = (2,3,2,1) \\
+  p_3 = (2,-2,2,-2) \\
+  p_4 = (2,0,0,0) \\
 
 \end{align*}
 $$
@@ -274,23 +274,156 @@ If none of the terms is constant, we need to actually calculate the plane equati
 
 ### Finding axis
 
-If the above is not the case, we go axis by axis until we find one that doesn't lay on our hyperplane. In order to do this, we check every of the vectors $(1,0,0,0), (0,1,0,0), (0,0,1,0) and (0,0,0,1)$ whether it lays outside of our plane, in other words
+If the above is not the case, we go axis by axis until we find one that doesn't lay on our hyperplane. In order to do this, we check every of the vectors $(1,0,0,0), (0,1,0,0), (0,0,1,0)$ and $(0,0,0,1)$ whether it lays outside of our plane, in other words
 
 $$
 \begin{align*}
-(1,0,0,0) \notin Lin(\{v_1, v_2, v_3\}) \\
-... \\
-(0,0,0,1) \notin Lin(\{v_1, v_2, v_3\}) \\
+  (1,0,0,0) \notin Lin(\{v_1, v_2, v_3\}) \\
+  ... \\
+  (0,0,0,1) \notin Lin(\{v_1, v_2, v_3\}) \\
 \end{align*}
 $$
 
-E.g. if $(1,0,0,0) \notin Lin(\{v_1, v_2, v_3\})$, then the plane equation is $x = ay + bz + cw + d$. If $(0,0,1,0) \notin Lin(\{v_1, v_2, v_3\})$ then $z = ax + by + cw + d$, and so on.
+E.g. if $(1,0,0,0) \notin Lin(\{v_1, v_2, v_3\})$, then the plane equation is $x = \alpha y + \beta z + \gamma w + \delta$. If $(0,0,1,0) \notin Lin(\{v_1, v_2, v_3\})$ then $z = \alpha x + \beta y + \gamma w + \delta$, and so on.
 
-We can check that by calculating determinant of such matrix and checking if it's different than zero.
+We can check that by calculating determinant $d$ of such matrices and checking if it's different than zero.
 
 $$
 \begin{align*}
-... TODO
+
+  d_x =
+    \begin{vmatrix}
+      v_{1x} & v_{1y} & v_{1z} & v_{1w}\\
+      v_{2x} & v_{2y} & v_{2z} & v_{2w}\\
+      v_{3x} & v_{3y} & v_{3z} & v_{3w}\\
+      1 & 0 & 0 & 0
+    \end{vmatrix}
+
+  ,
+
+  d_y =
+    \begin{vmatrix}
+      v_{1x} & v_{1y} & v_{1z} & v_{1w}\\
+      v_{2x} & v_{2y} & v_{2z} & v_{2w}\\
+      v_{3x} & v_{3y} & v_{3z} & v_{3w}\\
+      0 & 1 & 0 & 0
+    \end{vmatrix}
+
+  \\\\
+
+  d_z =
+    \begin{vmatrix}
+      v_{1x} & v_{1y} & v_{1z} & v_{1w}\\
+      v_{2x} & v_{2y} & v_{2z} & v_{2w}\\
+      v_{3x} & v_{3y} & v_{3z} & v_{3w}\\
+      0 & 0 & 1 & 0
+    \end{vmatrix}
+
+  ,
+
+  d_w =
+    \begin{vmatrix}
+      v_{1x} & v_{1y} & v_{1z} & v_{1w}\\
+      v_{2x} & v_{2y} & v_{2z} & v_{2w}\\
+      v_{3x} & v_{3y} & v_{3z} & v_{3w}\\
+      0 & 0 & 0 & 1
+    \end{vmatrix}
+
+\end{align*}
+$$
+
+Once we find a non-zero $d$, we know the equation of the hyperplane. We also have four points that belong to it, so we can solve a system of four variables to find out the constants.
+
+Let's assume we found out that the X axis doesn't lay on the hyperplane, therefore the equation of the hyperplane is $x = \alpha y + \beta z + \gamma w + \delta$. So, with our points: 
+
+$$
+
+
+\begin{align*}
+
+  p_1 = (p_{1x}, p_{1y}, p_{1z}, p_{1w}) \\
+  p_2 = (p_{2x}, p_{2y}, p_{2z}, p_{2w}) \\
+  p_3 = (p_{3x}, p_{3y}, p_{3z}, p_{3w}) \\
+  p_4 = (p_{4x}, p_{4y}, p_{4z}, p_{4w}) \\
+
+\end{align*}
+$$
+
+our system of equations is:
+
+$$
+\begin{align*}
+
+  \begin{cases} 
+
+    p_{1x} = \alpha p_{1y} + \beta p_{1z} + \gamma p_{1w} + \delta \\
+    p_{2x} = \alpha p_{2y} + \beta p_{2z} + \gamma p_{2w} + \delta \\
+    p_{3x} = \alpha p_{3y} + \beta p_{3z} + \gamma p_{3w} + \delta \\
+    p_{4x} = \alpha p_{4y} + \beta p_{4z} + \gamma p_{4w} + \delta \\
+
+  \end{cases} 
+
+\end{align*}
+
+$$
+
+and we can solve it e.g. using matrices:
+
+$$
+\begin{align*}
+
+  \begin{bmatrix}
+    p_{1x} \\
+    p_{2x} \\
+    p_{3x} \\
+    p_{4x} \\
+  \end{bmatrix}
+
+  =
+
+  \begin{bmatrix}
+    p_{1y} & p_{1z} & p_{1w} & 1 \\
+    p_{2y} & p_{2z} & p_{2w} & 1 \\
+    p_{3y} & p_{3z} & p_{3w} & 1 \\
+    p_{4y} & p_{4z} & p_{4w} & 1 \\
+  \end{bmatrix}
+
+  *
+
+  \begin{bmatrix}
+    \alpha \\
+    \beta  \\
+    \gamma \\
+    \delta \\
+  \end{bmatrix}
+
+  \\\\\\
+
+  \begin{bmatrix}
+    \alpha \\
+    \beta  \\
+    \gamma \\
+    \delta \\
+  \end{bmatrix}
+
+  =
+
+  \begin{bmatrix}
+    p_{1y} & p_{1z} & p_{1w} & 1 \\
+    p_{2y} & p_{2z} & p_{2w} & 1 \\
+    p_{3y} & p_{3z} & p_{3w} & 1 \\
+    p_{4y} & p_{4z} & p_{4w} & 1 \\
+  \end{bmatrix}^{-1}
+
+  *
+
+  \begin{bmatrix}
+    p_{1x} \\
+    p_{2x} \\
+    p_{3x} \\
+    p_{4x} \\
+  \end{bmatrix}
+
 \end{align*}
 $$
 
