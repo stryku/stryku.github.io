@@ -423,35 +423,9 @@ $$
 \end{align*}
 $$
 
-# TODOOOOO
 
-But, it can turn out that it's impossible to create a plane out of these points. E.g. these 3D points that we'd like to describe a plane won't do good.
-```
-p1: (1, 1, 1)
-p2: (2, 3, 4)
-p3: (3, 5, 7)
-```
+And after all this we have the equation of our hyperplane.
 
-We can be given any points. There might be a situation where the points don't define exactly one hyperplane (plane in usually more than 2D). E.g. this points could NOT be used to describe a 2D hyperplane:
-```
-p1: (1, 2, 3, 4)
-p2: (2, 4, 6, 8)
-p3: (1, 1, 1, 1)
-```
-because `p1` and `p2` are _linear
-
-
-
-# TODO REMOVE
-
-This is an inline equation: $V_{sphere} = \frac{4}{3}\pi r^3$,
-followed by a display style equation:
-
-$$
-\begin{align}
-V_{sphere} = \frac{4}{3}\pi r^3
-\end{align}
-$$
 
 
 # Thanks for reading o/
