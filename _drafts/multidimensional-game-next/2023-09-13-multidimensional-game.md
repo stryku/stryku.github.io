@@ -426,6 +426,24 @@ $$
 
 And after all this we have the equation of our hyperplane.
 
+# Find the points of intersecting the plane and the cube
+
+## Edge and hyperplane intersection
+
+In order to get all the points where our cube intersects a plane, we can grab all the edges of our cube and calculate their intersection points with the hyperplane. The result points will create a convex 3D shape. We could triangulate it and present. But, if we would really understand what we see we could present the shape a bit better.
+
+## Edges of faces
+
+As I mentioned in [on of my earlier posts](/multidimensional-game/2023/04/19/multidimensional-game.html), what we will do is we're gonna assign a color to every face of 4D cube and maintain the colors in the result 3D shape.
+
+In order to do that, it's best to not just grab all the edges of the cube, but consider the edges face by face, with the colors in mind. Thanks to that we'll be able to assign colors to edges and hyperplane intersection points and have a colorful 3D object in the end.
+
+In the same post I described how to generate the edges of faces of a simple 4D cube. We will continue from that.
+
+
+# TODO0000000000000000000000000000
+
+- headers size
 
 
 # Thanks for reading o/
