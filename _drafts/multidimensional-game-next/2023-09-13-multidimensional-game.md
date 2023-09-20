@@ -465,7 +465,6 @@ $$
   t' = \frac{ \alpha - \sum_{i=1}^{4} e_{0i} } 
             { \sum_{i=1}^{4} { ( e_{1i} - e_{0i} ) } }
 
-
 \end{align*}
 $$
 
@@ -479,9 +478,165 @@ There are three possible cases:
 We can check the last case by simply checking whether one of the vertices solves the plane equation. If it does, we have infinite number of points, otherwise we have zero.
 If we have infinite number of points, we just consider the two vertices of the edge as intersection points. It is enough for drawing the result 3D shape.
 
+Now, if we have an intersection point $p'$, we calculate it using the parametric equation:
+
+$$
+\begin{align*}
+
+  p' = e_0 + t'(e_1 - e_0)
+
+\end{align*}
+$$
+
+### Python
+
+Python code implementing this calculations looks like this. It's pretty self-explanatory, so we won't dive into it.
+
+```py
+def isect_segment_plane(segment_v, segment_u, plane, epsilon=1e-6):
+  """
+  segment_v, segment_u - two points describing segment
+  plane = C1, C2, C3 ... CN, scalars describing plane of equation C1v1 + C2v2 + ... + C(n-1)v(n-1) + Cn = 0
+  Returns 
+    - None if there's no intersection
+    - Intersection point if there's one intersection point
+    - string 'Inf' if there's infinite number of intersections points (segment lies on the plane).
+  """
+  v = segment_v
+  u = segment_u
+  u_sub_v = sub_vnvn(u, v)
+  Cn = plane[-1]
+  alpha = -Cn
+
+  if len(v) != len(u):
+    raise Exception(f'len(segment_v) {len(v)} != {len(u)} len(segment_u)')
+
+  sum_v = sum([plane[i]*v[i] for i in range(len(v))])
+  sum_u_sub_v = sum(plane[i]*u_sub_v[i] for i in range(len(u_sub_v)))
+
+  if abs(sum_u_sub_v) < epsilon:
+    # Vector is parallel. It might lay on the plane. Check one point if it lays on the plane
+    a = sum([plane[i]*v[i] for i in range(len(v))])
+    a += plane[-1]
+    if abs(a) < epsilon:
+      # Equation worked, lays on the plane
+      return 'Inf'
+    else:
+      return None
+
+  t = (alpha - sum_v)/sum_u_sub_v
+  if t < -epsilon or t > 1.0 + epsilon:
+    # t not in range <0, 1>. No intersection
+    return None
+
+  if t > 1.0:
+    t = 1.0
+  if t < 0.0:
+    t = 0.0
+
+  t_u_sub_v = mul_vn_scalar(u_sub_v, t)
+  isect_point = add_vnvn(v, t_u_sub_v)
+  return isect_point
+
+```
 
 
+## Intersection points of the whole cube
 
+As an output of the [previous post](/multidimensional-game/2023/04/19/multidimensional-game.html) we have created a set of vertices and edges of faces of our cube
+
+```py
+vertices, edges_of_faces = generate_vertices_and_faces(4)
+```
+
+Vertices is just a list and look like this:
+```
+[0]: 0, 0, 0, 0
+[1]: 0, 0, 0, 1
+[2]: 0, 0, 1, 0
+[3]: 0, 0, 1, 1
+[4]: 0, 1, 0, 0
+[5]: 0, 1, 0, 1
+[6]: 0, 1, 1, 0
+[7]: 0, 1, 1, 1
+[8]: 1, 0, 0, 0
+[9]: 1, 0, 0, 1
+[10]: 1, 0, 1, 0
+[11]: 1, 0, 1, 1
+[12]: 1, 1, 0, 0
+[13]: 1, 1, 0, 1
+[14]: 1, 1, 1, 0
+[15]: 1, 1, 1, 1
+```
+
+Edges of faces use indices of the vertices and look like this:
+```py
+[
+  {
+    (0, 1), (0, 4), (1, 5), (3, 7), (4, 6), (5, 7), (2, 3), (6, 7), (0, 2), (4, 5), (2, 6), (1, 3)
+  }, 
+  {
+    (0, 1), (10, 11), (2, 10), (8, 10), (2, 3), (0, 2), (8, 9), (9, 11), (0, 8), (1, 3), (1, 9), (3, 11)
+  }, 
+  {
+    (0, 1), (0, 4), (9, 13), (1, 5), (4, 12), (12, 13), (5, 13), (4, 5), (8, 9), (8, 12), (0, 8), (1, 9)
+  }, 
+  {
+    (0, 4), (10, 14), (2, 10), (4, 6), (4, 12), (6, 14), (8, 10), (0, 2), (2, 6), (8, 12), (0, 8), (12, 14)
+  }, 
+  {
+    (10, 11), (9, 13), (10, 14), (8, 10), (12, 13), (8, 9), (11, 15), (8, 12), (9, 11), (13, 15), (14, 15), (12, 14)
+  }, 
+  {
+    (4, 6), (4, 12), (6, 14), (5, 7), (5, 13), (12, 13), (6, 7), (4, 5), (7, 15), (13, 15), (14, 15), (12, 14)
+  }, 
+  {
+    (10, 11), (10, 14), (3, 7), (2, 10), (6, 14), (2, 3), (6, 7), (2, 6), (11, 15), (7, 15), (14, 15), (3, 11)
+  }, 
+  {
+    (9, 13), (1, 5), (3, 7), (5, 7), (5, 13), (11, 15), (7, 15), (9, 11), (13, 15), (1, 3), (1, 9), (3, 11)
+  }
+]
+```
+
+So, we have all he pieces to calculate the intersection points of the whole cube. We iterate face by face and edge by edge, and calculate the intersection points of the edge and the hyperplane:
+
+
+```py
+def plane_segments_intersecting_points(plane, segments):
+  """
+  Returns a list of intersection points of plane and given segments
+  plane = C1, C2, C3 ... CN, scalars describing plane of equation C1v1 + C2v2 + ... + C(n-1)v(n-1) + Cn = 0
+  segments: list of segments: [[a1, b1], [a2, b2], ...]
+  """
+
+  isec_points = []
+
+  for s in segments:
+    v = isect_segment_plane(s[0], s[1], plane)
+    if v is None:
+      # No intersection points
+      continue
+    elif v == 'Inf':
+      # Vertices are the intersection points
+      isec_points.append(tuple(s[0]))
+      isec_points.append(tuple(s[1]))
+    else:
+      # Just one intersection point
+      isec_points.append(tuple(v))
+
+  # Remove duplicates
+  isec_points = list(set(isec_points))
+
+  return isec_points
+
+face_isec_points = []
+for face_edges in edges_of_faces:
+  isec_points = plane_segments_intersecting_points(plane, face_edges)
+  face_isec_points.append(isec_points)
+```
+
+And that's it. We have the whole cube intersection points, grouped by face. We can start building our 3D shape to for drawing.
 
 # TODO0000000000000000000000000000
 
