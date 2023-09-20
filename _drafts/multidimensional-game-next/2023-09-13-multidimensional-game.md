@@ -426,7 +426,7 @@ $$
 
 And after all this we have the equation of our hyperplane.
 
-# Find the points of intersecting the plane and the cube
+# Find the points of intersecting the hyperplane and the cube
 
 ## Edge and hyperplane intersection
 
@@ -439,6 +439,48 @@ As I mentioned in [on of my earlier posts](/multidimensional-game/2023/04/19/mul
 In order to do that, it's best to not just grab all the edges of the cube, but consider the edges face by face, with the colors in mind. Thanks to that we'll be able to assign colors to edges and hyperplane intersection points and have a colorful 3D object in the end.
 
 In the same post I described how to generate the edges of faces of a simple 4D cube. We will continue from that.
+
+
+## Intersection of hyperplane and segment 
+
+(The idea described here was inspired by section 5 of the `On the Hyperbox – Hyperplane Intersection Problem` paper)
+
+Edges of our cube are just segments specified by two vertices of the edge. Let's call the edge $e$ and its vertices $e_0 = (e_{01}, e_{02}, e_{03}, e_{04})$ and $e_1 = (e_{11}, e_{12}, e_{13}, e_{14})$. We can write parametric representation of our edge
+
+$$
+\begin{align*}
+
+  e(t) = e_0 + t(e_1 - e_0) \\
+  where \\
+  t \in [0,1] \\
+
+\end{align*}
+$$
+
+If the edge intersects with the plane, we should be able to find the intersection point by solving for $t$ and using the plane equation.
+
+$$
+\begin{align*}
+
+  t' = \frac{ \alpha - \sum_{i=1}^{4} e_{0i} } 
+            { \sum_{i=1}^{4} { ( e_{1i} - e_{0i} ) } }
+
+
+\end{align*}
+$$
+
+There are three possible cases:
+- $t' \in [0,1]$ then we have exactly one point of intersection.
+- $t' \notin [0,1]$, then there is no intersection of the edge and hyperplane. The line on which the edge lies DO intersect the plane, but the intersection point is outside of the edge.
+- It's impossible to calculate $t'$ because $\sum_{i=1}^{4} { ( e_{1i} - e_{0i} ) }$ is equal to zero. In this case, the edge is parallel to the hyperplane, so there are two sub-cases:
+  - The edge lies exactly on the hyperplane. There are infinite number of intersection points.
+  - The edge doesn't lie on the hyperplane - no intersection points.
+
+We can check the last case by simply checking whether one of the vertices solves the plane equation. If it does, we have infinite number of points, otherwise we have zero.
+If we have infinite number of points, we just consider the two vertices of the edge as intersection points. It is enough for drawing the result 3D shape.
+
+
+
 
 
 # TODO0000000000000000000000000000
