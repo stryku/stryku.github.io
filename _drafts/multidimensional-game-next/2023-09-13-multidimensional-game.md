@@ -20,6 +20,10 @@ It's about time to describe math behind it and code it. Steps to do are:
 2. Find the points of intersecting the plane and the cube.
 3. Build the 3D shape based on the points of intersection.
 
+# Table of Contents:
+1. This will become a table of contents.
+{:toc}
+
 # Defining the plane
 
 A plane can be defined in a couple of ways. I took the approach of selecting points and finding the plane equation that the points lay on. So, e.g. giving three points : `(1, 2, 3)`, `(-1, -1, 3)` and `(3, 2, 1)`, we want to find the equation of the 2D plane: `3x - 2y + 3z - 8 = 0`.
@@ -424,7 +428,97 @@ $$
 $$
 
 
-And after all this we have the equation of our hyperplane.
+And after all this we have the equation of our hyperplane. Python looks like this:
+
+```py
+def calc_plane_from_points(points):
+  """
+  Returns list of scalars S1, S2, S3 ... Sn of plane equation S1x + S2y + S3z + ... + Sn = 0
+  Or None if it's impossible to calculate the plane equation
+  """
+
+  N = len(points)
+
+  if N < 3:
+    raise RuntimeError(f'Dimension should be >=3. It is {N}')
+
+  for p in points:
+    if len(p) != N:
+      raise RuntimeError(f'Point {p} is not a {N}d point')
+
+  # Calc vectors on the plane
+  vectors = []
+  last_point = points[-1]
+  for i in range(N-1):
+    pi = points[i]
+    v = sub_vnvn(pi, last_point)
+    vectors.append(v)
+
+  # Ensure the points span a proper plane
+  any_det_non_zero = False
+
+  for indices in itertools.combinations(range(N), N-1):
+    m = []
+    for p in points[:-1]:
+      m.append([p[i] for i in indices])
+
+    if np.linalg.det(m) != 0:
+      any_det_non_zero = True
+      break
+
+  if not any_det_non_zero:
+      print('Not able to figure out one result plane')
+      return None
+
+  # Check the simplest case when one term is constant
+  for i in range(N):
+    val = points[0][i]
+    all_equal = True
+    for p in points:
+      if p[i] != val:
+        all_equal = False
+        break
+
+    if all_equal:
+      # Got one constant
+      result_plane = [0]*(N+1)
+      result_plane[i] = 1
+      result_plane[-1] = -points[0][i]
+      return result_plane
+
+  # Find the axis not laying on the plane
+  non_zero_i = None
+
+  for i in range(len(p1)):
+    m = points[:-1]
+    m.append([0]*N)
+    m[-1][i] = 1
+
+    if np.linalg.det(m) != 0:
+      non_zero_i = i
+      break
+
+  if non_zero_i is None:
+    raise RuntimeError('Could not find axis not laying on the plane')
+
+  # Solve the system of equations
+  m = [[]*(N-1)]*N
+  for i in range(N):
+    for row in range(N):
+      if i == row:
+        continue
+      m[row].append(points[i])
+  for row in range(N):
+    m[row].append(1)
+
+  m = np.linalg.inv(m)
+  p = [p[non_zero_i] for p in points]
+  result = np.matmul(np.array(m), np.array(p)).tolist()
+  result = [-r for r in result]
+  result.insert(non_zero_i, 1)
+
+  return result
+```
 
 # Find the points of intersecting the hyperplane and the cube
 
@@ -636,11 +730,50 @@ for face_edges in edges_of_faces:
   face_isec_points.append(isec_points)
 ```
 
-And that's it. We have the whole cube intersection points, grouped by face. We can start building our 3D shape to for drawing.
+And that's it. We have the whole cube intersection points, grouped by face. We can start building our 3D shape for drawing.
+
+# Building the 3D shape
+
+2D cube (square) has four faces (edges). 3D cube has six faces (squares). 4D hypercube has eight faces (cubes).
+
+At this point we are able to calculate intersection points of these eight faces. What we're gonna do now is to take these points and create a 3D shape out of them.
+
+All the intersection points of one face lay on some 3D plane and they create a convex polygon on this plane. 
+
+If you take all the convex polygons from all faces and render all of them, they will create a convex 3D polygon. And that's exactly what we're doing.
+
+The algorithm is pretty simple
+```
+for face_points in face_isec_points
+  triangles = triangulate(face_points)
+  display_triangles_using_some_color(triangles)
+```
+
+Two things. One, we won't implement triangulation today. I used the ready-made `scipy.spatial.Delaunay`.
+
+Two, we haven't talked about colors really. 
+
+# Colors
+
+All in all, we run a very simple 3D visualization program here. There is no lightning, so if we'd use a single color for the whole 3D object, it'd end up pretty flat. Instead, we're gonna use multiple colors, one for each face.
+
+The important thing is that we're gonna assign distinct colors not to the 3D faces. We have to assign them at the very beginning, to the faces of 4D shape. Thanks to that we will be able to match the presented faces of the 3D object, with the faces of the 4D hypercube.
+
+Assigning colors to the faces of the 4D object means we're gonna need to carry this information through all the math calculations we just talked about. This complicates the code, but just a little bit.
+
+
+
+TODO face_isec_points with colors
+
+
+
+
+
 
 # TODO0000000000000000000000000000
 
 - headers size
+- Move every math stuff to latex
 
 
 # Thanks for reading o/
